@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputBookIsComplete = document.getElementById("inputBookIsComplete");
   inputBookIsComplete.addEventListener("change", function () {
     if (inputBookIsComplete.checked) {
-      isCompleted = true;
+      isComplete = true;
     } else {
-      isCompleted = false;
+      isComplete = false;
     }
   });
 
@@ -33,10 +33,10 @@ function addBook() {
   const bookAuthor = document.getElementById("inputBookAuthor").value;
   const bookYear = document.getElementById("inputBookYear").value;
   const inputBookIsComplete = document.getElementById("inputBookIsComplete");
-  const isCompleted = inputBookIsComplete.checked;
+  const isComplete = inputBookIsComplete.checked;
 
   const generatedID = generateId();
-  const bookObject = generateBookObject(generatedID, bookTitle, bookAuthor, bookYear, isCompleted);
+  const bookObject = generateBookObject(generatedID, bookTitle, bookAuthor, bookYear, isComplete);
   books.push(bookObject);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
@@ -47,14 +47,14 @@ function generateId() {
   return +new Date();
 }
 
-function generateBookObject(id, title, author, year, isCompleted) {
+function generateBookObject(id, title, author, year, isComplete) {
   const yearNumber = parseInt(year);
   return {
     id,
     title,
     author,
     year: yearNumber,
-    isCompleted,
+    isComplete,
   };
 }
 
@@ -67,7 +67,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
   for (const bookItem of books) {
     const bookElement = makeBook(bookItem);
-    if (!bookItem.isCompleted) incompleteBookshelfList.append(bookElement);
+    if (!bookItem.isComplete) incompleteBookshelfList.append(bookElement);
     else completeBookshelfList.append(bookElement);
   }
 });
@@ -89,7 +89,7 @@ function makeBook(bookObject) {
   article.classList.add("book_item");
   article.append(title, author, year, actionDiv);
 
-  if (bookObject.isCompleted) {
+  if (bookObject.isComplete) {
     const incompleteButton = document.createElement("button");
     incompleteButton.classList.add("green");
     incompleteButton.innerText = "Belum selesai dibaca";
@@ -163,7 +163,7 @@ function addBookToCompleted(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = true;
+  bookTarget.isComplete = true;
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
 }
@@ -192,7 +192,7 @@ function undoBookFromCompleted(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = false;
+  bookTarget.isComplete = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
 }
@@ -271,7 +271,7 @@ function searchBooks() {
   for (const bookItem of books) {
     const bookElement = doSearchBooks(bookItem);
 
-    if ((!bookItem.isCompleted && bookItem.title.toLowerCase().includes(searchTitle)) || (bookItem.isCompleted && bookItem.title.toLowerCase().includes(searchTitle))) {
+    if ((!bookItem.isComplete && bookItem.title.toLowerCase().includes(searchTitle)) || (bookItem.isComplete && bookItem.title.toLowerCase().includes(searchTitle))) {
       searchBookshelfList.append(bookElement);
     }
   }
@@ -296,7 +296,7 @@ function doSearchBooks(bookObject) {
 
   article.dataset.bookId = bookObject.id;
 
-  if (bookObject.isCompleted) {
+  if (bookObject.isComplete) {
     const incompleteButton = document.createElement("button");
     incompleteButton.classList.add("green");
     incompleteButton.innerText = "Belum selesai dibaca";
@@ -370,7 +370,7 @@ function addBookToCompletedInsearch(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = true;
+  bookTarget.isComplete = true;
   document.dispatchEvent(new Event(RENDER_EVENT));
   searchBooks();
 
@@ -385,7 +385,7 @@ function undoBookFromCompletedInsearch(bookId) {
 
   if (bookTarget == null) return;
 
-  bookTarget.isCompleted = false;
+  bookTarget.isComplete = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
   searchBooks();
 
