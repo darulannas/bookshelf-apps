@@ -155,11 +155,6 @@ function addBookToCompleted(bookId) {
   bookTarget.isCompleted = true;
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
-
-  const button = document.querySelector(`[data-book-id="${bookId}"] .green`);
-  if (button) {
-    button.innerText = "Selesai dibaca";
-  }
 }
 
 function findBook(bookId) {
@@ -189,11 +184,6 @@ function undoBookFromCompleted(bookId) {
   bookTarget.isCompleted = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
-
-  const button = document.querySelector(`[data-book-id="${bookId}"] .green`);
-  if (button) {
-    button.innerText = "Belum selesai dibaca";
-  }
 }
 
 function editBook(bookId) {
@@ -374,7 +364,7 @@ function addBookToCompletedInsearch(bookId) {
 
   const button = document.querySelector(`[data-book-id="${bookId}"] .green`);
   if (button) {
-    button.innerText = "Selesai dibaca";
+    button.innerText = "Belum selesai dibaca";
   }
 }
 
@@ -389,7 +379,7 @@ function undoBookFromCompletedInsearch(bookId) {
 
   const button = document.querySelector(`[data-book-id="${bookId}"] .green`);
   if (button) {
-    button.innerText = "Belum selesai dibaca";
+    button.innerText = "Selesai dibaca";
   }
 }
 
