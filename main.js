@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
     addBook();
   });
 
+  const inputBookIsComplete = document.getElementById("inputBookIsComplete");
+  inputBookIsComplete.addEventListener("change", function () {
+    if (inputBookIsComplete.checked) {
+      isCompleted = true;
+    } else {
+      isCompleted = false;
+    }
+  });
+
   if (isStorageExist()) {
     loadDataFromStorage();
   }
@@ -23,9 +32,11 @@ function addBook() {
   const bookTitle = document.getElementById("inputBookTitle").value;
   const bookAuthor = document.getElementById("inputBookAuthor").value;
   const bookYear = document.getElementById("inputBookYear").value;
+  const inputBookIsComplete = document.getElementById("inputBookIsComplete");
+  const isCompleted = inputBookIsComplete.checked;
 
   const generatedID = generateId();
-  const bookObject = generateBookObject(generatedID, bookTitle, bookAuthor, bookYear, false);
+  const bookObject = generateBookObject(generatedID, bookTitle, bookAuthor, bookYear, isCompleted);
   books.push(bookObject);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
@@ -193,7 +204,8 @@ function editBook(bookId) {
 
   const newTitle = prompt("Masukkan judul buku yang baru:", book.title);
   const newAuthor = prompt("Masukkan penulis buku yang baru:", book.author);
-  const newYear = prompt("Masukkan tahun buku yang baru:", book.year);
+  const newYearStr = prompt("Masukkan tahun buku yang baru:", book.year);
+  const newYear = parseInt(newYearStr);
 
   if (newTitle !== null) {
     book.title = newTitle;
@@ -397,7 +409,8 @@ function editBookInsearch(bookId) {
 
   const newTitle = prompt("Masukkan judul buku yang baru:", book.title);
   const newAuthor = prompt("Masukkan penulis buku yang baru:", book.author);
-  const newYear = prompt("Masukkan tahun buku yang baru:", book.year);
+  const newYearStr = prompt("Masukkan tahun buku yang baru:", book.year);
+  const newYear = parseInt(newYearStr);
 
   if (newTitle !== null) {
     book.title = newTitle;
